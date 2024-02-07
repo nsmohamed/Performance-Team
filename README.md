@@ -16,7 +16,7 @@ Therefore I decided to find a way to solve this with efficiently and at little t
 We will be using Google Apps Script to import our leads using a script that I'll link to below, in this walkthrough we're going to:
 
 1. Create a Facebook app
-2.Create a Facebook webhook
+2. Create a Facebook webhook
 3. Prepare a blank Google Sheets
 4. Connect Webhook to Google apps script
 5. Get a Facebook page access token
@@ -34,38 +34,17 @@ We will be using Google Apps Script to import our leads using a script that I'll
 - Facebook Graph API Explorer: https://developers.facebook.com/tools/explorer/
 - Facebook Lead Ads Testing Tool: https://developers.facebook.com/tools/lead-ads-testing
 - Facebook Access Token Debugger: https://developers.facebook.com/tools/debug/accesstoken
-- importJSON code: 
+- importJSON code: https://github.com/nsmohamed/ImportJSON/blob/master/ImportJSON.gs
 
 ### Additional Useful Reference Materials
 
-- A very good documentation explaining about Facebook access token expiration https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension
+- Walkthrough on how to get a long lived token(60 day token): https://www.youtube.com/watch?v=lTJW8o9dFf4&ab_channel=kitchn_io
 
 # Let's begin!
 
-#### Step 1: Create a Facebook Lead Ads
+#### Step 1: Create a Facebook App
 
-Head over to your Facebook page settings page > "Publishing Tools" > "Forms Library". Start creating a Lead Ads if you don't have an existing one.
-![step1](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/1%20-%20create%20lead%20ads.png)
-![step2](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/2%20-%20create%20lead%20ads.png)
-![step3](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/3%20-%20create%20lead%20ads.png)
-![step4](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/4%20-%20create%20lead%20ads.png)
-![step5](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/5%20-%20create%20lead%20ads.png)
-![step6](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/6%20-%20create%20lead%20ads.png)
-
-After the step below, just click on the "Finish" button
-![step7](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/7%20-%20create%20lead%20ads.png)
-
-Here's your newly created Lead Ads! You may click on the "Preview" link to view your lead ads.
-![step8](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/8%20-%20create%20lead%20ads.png)
-
-Here's the lead ads which I have created.
-![step9](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/9%20-%20create%20lead%20ads.png)
-
-#### Step 2: Prepare a blank Google Sheets
-
-![step10](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/10%20-%20prepare%20excel%20sheet.png)
-
-#### Step 3: Create a Facebook App
+After first signing up to meta for developers.
 
 Head over to https://developers.facebook.com/apps/ and add a new app.
 ![step11](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/11%20-%20create%20facebook%20app.png)
@@ -73,10 +52,14 @@ Head over to https://developers.facebook.com/apps/ and add a new app.
 Key in a display name for your new app.
 ![step12](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/12%20-%20create%20facebook%20app.png)
 
+Make sure to choose the business account associated with the page:
+<img width="317" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/77b5345f-8b2b-4067-854c-a3ff69022815">
+
+
 Key in the security check and you are all set with a new Facebook app!
 ![step13](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/13%20-%20create%20facebook%20app.png)
 
-#### Step 4: Create a Facebook Webhook
+#### Step 2: Create a Facebook Webhook
 
 Mouse over to the "Webhooks" selection and click on the "Set Up" button
 ![step14](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/14%20-%20add%20webhook.png)
@@ -87,20 +70,30 @@ You will be directed to this page. Now keep this browser tab open. We need to he
 In your Google Drive, create a new Google Apps Script
 ![step16](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/16%20-%20setup%20webhook.png)
 
-This is for Facebook to verify the existence of our webhook. Copy these lines of code into your script panel. You can put any random string as the `hub.verify_token`.
+This is for Facebook to verify the existence of our webhook. Copy these lines of code into your script panel. You can put any random string as the `hub.verify_token`. I used this free tool: https://www.lastpass.com/features/password-generator to get a 16 letter code (keep this code)
 
-> You can copy the code [here](https://github.com/simmatrix/facebook-leads-google-sheets-integration/blob/master/scripts/Code.gs) but please only copy the doGet() section first and NOT the whole script!
+> You can copy the code :
+function doGet(request)
+{
+  if (request.parameter['hub.verify_token'] == 'abcdefghijklmn0123456789') {
+    return ContentService.createTextOutput(request.parameter['hub.challenge']);
+  }
+}
 
-![step17](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/17%20-%20setup%20webhook.png)
+
+![step17]<img width="798" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/7c28202a-0471-4832-8d79-90d203b411b1">
 
 Then you need to deploy your script to make it live.
-![step18](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/18%20-%20deploy%20webhook.png)
+![step18]<img width="844" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/16f1fae8-c2cd-42d6-ba99-214a7fc48fbc">
+
+<img width="555" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/97eb4227-2cea-4d94-8ff2-cff2ef5d84ee">
 
 Make sure you are executing your script as `Me (<your_email_address>)` and give `Anyone, even anonymous` the access to your app. And the Project version should be `New`.
-![step19](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/19%20-%20deploy%20webhook.png)
+![step19]<img width="545" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/55ba179d-435d-4af9-a353-c3990d6fde5e">
+
 
 After you have made it live, copy your web app URL.
-![step20](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/20%20-%20deploy%20webhook.png)
+![step20]<img width="587" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/92b08228-157b-473e-ad1d-42d46bed1555">
 
 You may now head back to your Facebook Developers App page.
 ![step21](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/21%20-%20register%20webhook.png)
@@ -108,7 +101,7 @@ You may now head back to your Facebook Developers App page.
 Make sure to change the `User` option to `Page` from the drop down list, then proceed to click on the "Subscribe to this object" button.
 ![step22](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/22%20-%20register%20webhook.png)
 
-Key in the web app URL that you copied from your Google Apps script just now into the Callback URL field, and key in the same verify_token that you have keyed into your Google Apps script. Click `Verify and Save` to finish this off.
+Key in the web app URL that you copied from your Google Apps script just now into the Callback URL field, and key is (['hub.verify_token'] == 'abcdefghijklmn0123456789') that you generated and added to the Google apps script. Click `Verify and Save` to finish this off.
 ![step23](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/23%20-%20register%20webhook.png)
 
 You will now see a list of items below. (You may ignore the warning message as of now, it will go away once you have finished configuring and set your app to live)
@@ -118,31 +111,36 @@ Search for the item `leadgen` and hit on the "Subscribe" button
 ![step25](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/25%20-%20make%20subscription.png)
 ![step26](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/26%20-%20make%20subscription.png)
 
-#### Step 5: [NEW - DUE TO FACEBOOK RECENT TIGHTEN SECURITY] Request for "manage_pages" permission and set your FB app to live after approval
 
-While waiting for the approval from Facebook, which usually takes quite a while, you may go through the subsequent steps below, with your Facebook app still under development mode, but you won't get a final working version without having the approval from Facebook and without having your FB app goes to `live` mode.
 
-But let's continue on with requesting for permission from Facebook. First, under your Facebook Developer page for your app, go to the `App Review` page, and click on the `Start a Submission` button.
+#### Step 3: Get a Facebook long lived page access token
 
-![newfacebookchange1](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/new-fb-change-1.png)
+First get the get the app ID and app Secret:
+- go to App settings>Basics, click on show beside the app secret to copy it as well as the app ID and save them on a note or text file as we'll need them to generate the long lived token
+<img width="714" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/99ff34cc-8c77-45a9-90d5-96de7086a792">
 
-Search for the `manage_pages` permission and tick on the checkbox, then click `Add 1 Item` to exit this dialog box.
+Then head over to: Facebook Graph API Explorer](https://developers.facebook.com/tools/explorer
 
-![newfacebookchange2](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/new-fb-change-2.png)
 
-After this, click on the `detail` link and fill in the details in the subsequent pop-up dialog box.
+Generate User token:
+- You'll need the following permissions to be able to retrieve leads:
+<img width="289" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/cc3d3342-ca79-4735-b98e-90f36556c173">
 
-![newfacebookchange3](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/new-fb-change-3.png)
+-Then choose to "Get user access token": 
+<img width="920" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/9c064af7-e019-4c91-9009-31a0716f2079">
 
-Note: I'm still waiting for someone to reply to my question on [Facebook Developer Group](https://www.facebook.com/groups/fbdevelopers/permalink/1934516866591818/). Will elaborate more on how to fill in the details after I have gotten a reply from some good folks over there.
 
-So basically after submitted for app review, you would need to wait till Facebook approves your Facebook app. The next step to do after approval is to set your Facebook app to `live` mode.
 
-> Side Note: For the submission of Facebook chatbot, it took me a shocking 2 months, but no worries, I submitted around May 2018, which was the time when Facebook had just re-enabled back their app submission after deactivating it for a while due to the Cambridge Analytica data breach legal case, and requires all existing apps to re-submit to retain their existing permissions. Probably due to the huge influx of requests that Facebook had some delay on their end during that period of time.
 
-#### Step 6: Get a Facebook page access token
+#### Step 3: Prepare a blank Google Sheets
 
-> For this section, you would need to head over to [Facebook Graph API Explorer](https://developers.facebook.com/tools/explorer)
+![step10](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/10%20-%20prepare%20excel%20sheet.png)
+
+
+
+
+
+
 
 ### The Forbidden Path
 
