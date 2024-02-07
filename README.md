@@ -1,29 +1,40 @@
 ![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
 
-test 
-Here's a visual guide on how to transfer your Facebook Leads to Google Sheets in realtime, with the use of Google Apps Script, without using Facebook Javascript SDK. Refer to the [bottom section](https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional) for the way to do it in non-realtime (pull in bulk) as well.
+You can find the original walkthrough here: https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional
+
+Th walkthrough was great, but it was a bit outdated, therefore in the following visual walkthrough I'll show you how I transfered Facebook leads to Google Sheets and constantly update the sheet using a trigger in app script.
+
 
 ### Reason for doing so
 
-To be quick, there are actually lots of paid or free integration services out there which you can directly use. Free service does have its limitations. Since I am now having my year-end holiday, so it is totally not a big deal for me to spend some time doing the manual configuration.
+I'm a media buyer, I create lead ads for my clients regularly. Recently one of our clients has started using Zapier to get FB leads to Google sheets, main issue was the high monthly fees and the limitations.
+
+Therefore I decided to find a way to solve this with efficiently and at little to no cost. 
 
 ### Quick introduction
 
-We will be using Google Apps Script to write our integration script, well it does have its [quotas](https://script.google.com/dashboard/quota) as well but they are very high which would definitely meet most people's needs. The overall flow goes like this:
+We will be using Google Apps Script to import our leads using a script that I'll link to below, in this walkthrough we're going to:
 
-1. Create a Facebook Lead Ads
-2. Prepare a blank Google Sheets
-3. Create a Facebook app
-4. Create a Facebook webhook
+1. Create a Facebook app
+2.Create a Facebook webhook
+3. Prepare a blank Google Sheets
+4. Connect Webhook to Google apps script
 5. Get a Facebook page access token
-6. Subscribe your Facebook page to your Facebook webhook
-7. Update your webhook script to receive and store your lead data in Google Sheets
+6. Add importJSON script to Google apps script
+7. Add a trigger that reruns the script to get regular updates.
+8. Structure our google sheets to prepare for multiple forms.
+
+### Prerequisites
+
+- Be an admin on the FB page (not just the ad account)
+- Have a lead form ready, if you already have an existing lead form that worked in the past that will work just fine.
 
 ### Useful Tools Being Used
 
 - Facebook Graph API Explorer: https://developers.facebook.com/tools/explorer/
 - Facebook Lead Ads Testing Tool: https://developers.facebook.com/tools/lead-ads-testing
 - Facebook Access Token Debugger: https://developers.facebook.com/tools/debug/accesstoken
+- importJSON code: 
 
 ### Additional Useful Reference Materials
 
