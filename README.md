@@ -5,9 +5,9 @@ Th walkthrough was great, but it was a bit outdated, therefore in the following 
 
 ### Reason for doing so
 
-I'm a media buyer, I create lead ads for my clients regularly. Recently one of our clients has started using Zapier to get FB leads to Google sheets, main issue was the high monthly fees and the limitations.
+As media buyers, we create lead ads for our clients regularly. Recently one of our clients has started using Zapier to get FB leads to Google sheets, main issue was the high monthly fees and the limitations.
 
-Therefore I decided to find a way to solve this with efficiently and at little to no cost. 
+Therefore we decided to find a way to solve this with efficiently and at little to no cost. 
 
 ### Quick introduction
 
