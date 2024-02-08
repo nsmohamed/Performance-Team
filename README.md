@@ -1,4 +1,4 @@
-<img width="608" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/bba276d6-429c-4155-99df-3946b9b44863">![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
+![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
 
 You can find the original walkthrough here: https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional
 
@@ -236,7 +236,6 @@ First in your google worksheet, create two sheets:
   
 - Create another sheet with the name we typed in the second column(leads_From_formID122)
 <img width="313" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/4da68e6a-190e-499e-b0c0-c677a25e65cf">
-
 
 
 Head over to the apps script>> script go to the bottom, you'll find the following function importleads():
