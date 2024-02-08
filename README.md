@@ -1,4 +1,4 @@
-![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
+<img width="608" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/bba276d6-429c-4155-99df-3946b9b44863">![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
 
 You can find the original walkthrough here: https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional
 
@@ -34,7 +34,7 @@ We will be using Google Apps Script to import our leads using a script that I'll
 - Facebook Graph API Explorer: https://developers.facebook.com/tools/explorer/
 - Facebook Lead Ads Testing Tool: https://developers.facebook.com/tools/lead-ads-testing
 - Facebook Access Token Debugger: https://developers.facebook.com/tools/debug/accesstoken
-- importJSON code: https://github.com/nsmohamed/ImportJSON/blob/master/ImportJSON.gs
+- importJSON code: [https://github.com/nsmohamed/ImportJSON/blob/master/ImportJSON.gs](https://github.com/nsmohamed/facebook-leads-google-sheets-integration/blob/master/App%20Scripts%20importJSON.gs)
 
 ### Additional Useful Reference Materials
 
@@ -119,8 +119,7 @@ First get the get the app ID and app Secret:
 - go to App settings>Basics, click on show beside the app secret to copy it as well as the app ID and save them on a note or text file as we'll need them to generate the long lived token
 <img width="714" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/99ff34cc-8c77-45a9-90d5-96de7086a792">
 
-Then head over to: Facebook Graph API Explorer](https://developers.facebook.com/tools/explorer
-
+- Then head over to: Facebook Graph API Explorer](https://developers.facebook.com/tools/explorer
 
 Generate User token:
 - You'll need the following permissions to be able to retrieve leads:
@@ -129,186 +128,166 @@ Generate User token:
 -Then choose to "Get user access token": 
 <img width="920" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/9c064af7-e019-4c91-9009-31a0716f2079">
 
+- After getting the token:
+<img width="364" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/f6a75297-ccb3-4f35-aa25-4614a579268f">
 
+paste your new access token, your appID and your app secret into the following code:
 
+oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token=add_token_here&client_id=add_appID_here&client_secret=add_appSecret_here
+<img width="935" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/921e47ad-4a1d-4227-bedf-c56f1a414cb0">
 
-#### Step 3: Prepare a blank Google Sheets
+Then press submit, after submitting you'll get:
+<img width="340" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/a39873ea-55bf-4b44-b81a-f3887683da02">
+
+The entirety of this string is your long lived token.
+
+#### Step 4: testing our access:
+
+If you already have an existing form with existing leads great!
+
+If not please create a form, create a test lead using this tool: https://developers.facebook.com/tools/lead-ads-testing, then come back to this step.
+
+Then what we will need is:
+
+- Form ID.
+
+After getting the form ID, type the following get: {Form_id}/leads
+
+Then submit, you should get:
+
+<img width="960" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/657fbda0-2b74-413f-8e7f-d57cce8446dd">
+
+If you get this then great! we can now head over to our google sheets!
+
+If not please reach out or try retracing your steps:
+
+- check your permissions.
+<img width="83" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/50964ec6-21c9-49e9-bbc8-60e6510994b6">
+- Check that you connected your app with the right business account.
+- Check that you have the right lead form.
+- Check that you subscribed to leadGen on webhook.
+
+  
+#### Step 5: Prepare a blank Google Sheets and add importJSON appScript
 
 ![step10](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/10%20-%20prepare%20excel%20sheet.png)
 
+Go to app scripts:
+<img width="462" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/42dabfd3-8542-489a-9eb3-3dda8d6b292d">
 
+Copy and paste the script in this link: https://github.com/nsmohamed/ImportJSON/blob/master/ImportJSON.gs
 
+<img width="680" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/ce1fc73d-d270-423e-a3d8-19797b5c3f3f">
 
+Then remove the existing empty function:
+<img width="943" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/f2003c26-3e9b-4767-b94f-35d72867190e">
 
+Replace it with the new script:
+<img width="840" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/9b5ce1df-620d-4d04-9f9f-a1de4ff34b17">
 
+Then save: <img width="619" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/0e943e29-c8a1-4a40-8887-53ee903fe07c">
 
-### The Forbidden Path
+Try running the code.
+It will request your authorization when running:
+<img width="321" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/1967c159-8d6c-4587-bb00-1b1f4abeba08">
 
-Before proceeding further, I would like to let you know that actually there is a quick way of obtaining a `page access token` but I would not encourage you to do so because the token will expire in about one hour plus. You would need a long-lived token that never expire. Here's a quick way of obtaining a `Page Access Token`, just select your Facebook page from the drop-down list above of the Access Token field, then click `Get Access Token`.
+Review, permissions and sign into your google account:
 
-![step27a](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/27a%20-%20shortcut%20of%20getting%20page%20access%20token.png)
+<img width="488" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/1cbcef02-b37d-4d59-8337-fa3843ff6aaf">
 
-You may then click on the blue "info" icon within the Access Token field to view its expiry time. You can see that it will be expiring soon. I created this around 6.45PM and it will expire at 8.00PM.
+Ignore the following message, press on advanced press on the "Go to Untitled project (unsafe)":
+<img width="474" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/792d59e5-e2c7-4c5a-9b4e-2a67d0be24ee">
 
-![step27b](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/27b%20-%20shortcut%20of%20getting%20page%20access%20token.png)
+Then allow:
+<img width="422" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/77ced39a-a4ed-47f6-86d1-f87207ae7a43">
 
-So right now I would take you for a ride of how to obtain a long-lived `page access token`. Here's a big picture:
+The code will give you an error and that's fine, we haven't provided it with the url it will be calling, we'll do this in the next step.
 
-1. First we would need to get a short-lived `user access token`
-2. Then we exchange the short-lived `user access token` with a long-lived one
-3. Finally we request for a `page access token` with our long-lived `user access token`
 
-> If our user access token is long-lived, so will our page access token. And vice versa...
+#### Two ways to call the leads into our google sheets:
 
-### The Right Path
+##### 1 Calling it manually into our google sheets using importJSON:
 
-#### 1. Get Short-lived User Access Token
+After saving the script, go back to the google sheets and do the following:
 
-On a fresh page of your Graph API Explorer... (I switched to Facebook's new beta Graph Explorer. If you're still in the classic mode, you can either stay as it is or switch to this new beta and nicer look interface)
-![step28](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/28%20-%20get%20short-lived%20user%20access%20token.png)
+If successful (great job so far super hero, you're soo close!)
 
-Make sure you have selected the correct Facebook app at the top-right drop-down list, for mine, it is `Lead Ads Google Sheets Linkage`. After this, from the "Get Token" drop-down list, click on `Get User Access Token`
-![step29](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/29%20-%20get%20short-lived%20user%20access%20token.png)
+call "=importJSON" function, should appear as follows:
+<img width="235" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/6c5272a8-4a86-4bf8-9d83-30de71425294">
 
-Authorize your Facebook app to read your name and profile picture.
+then paste the following between quotations "https://graph.facebook.com/v19.0/Add_form_id/leads?date_preset=lifetime&limit=1000&access_token=Add_longLivedToken"
 
-![step29b](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/29b%20-%20get%20short-lived%20user%20access%20token.png)
+**Important:
+**
+- dont forget to add the quotations ""
+- replace the "Add_form_id" with the actual form ID
+- replace "Add_longLivedToken" with the long lived token.
 
-Now you would need to add permission. Go to the `Add a Permission` selection list, click on the subsection `Events Groups Pages`, then tick on the `manage_pages` checkbox
-![step30](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/30%20-%20get%20short-lived%20user%20access%20token.png)
+You should now get all your leads in a table format in a descending order:
+<img width="345" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/6d5cc230-5d8a-441f-ba87-cbc12e13e954">
 
-Then click on the blue `Get Access Token` button
-![step31](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/31%20-%20get%20short-lived%20user%20access%20token.png)
+##### You should use the second way when you want to get regular updates for your leads:
 
-Continue on with authorizing your Facebook app to read your Facebook page data.
-![step32](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/32%20-%20get%20short-lived%20user%20access%20token.png)
+First in your google worksheet, create two sheets:
 
-Copy the string as shown in the Access Token field. This is your short-lived `user access token`.
-![step33](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/33%20-%20get%20short-lived%20user%20access%20token.png)
+- name the first one "LeadsSheet", it's very important you name it exactly this.
+    - in the first column will contain our form IDs(if we want to get more than one form)
+    - in the second colum we should write the name of the sheet we want to export our leads to. (ex. leads_From_formID122)
+  
+- Create another sheet with the name we typed in the second column(leads_From_formID122)
+<img width="313" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/4da68e6a-190e-499e-b0c0-c677a25e65cf">
 
-#### 2. Exchange Your Short-lived User Access Token with a Long-lived one
 
-Open a blank text editor and key in this line of code. Remember to replace the placeholders `INSERT_YOUR_USER_ACCESS_TOKEN`, `INSERT_YOUR_CLIENT_ID`, `INSERT_YOUR_APP_SECRET` with your own data.
 
-```
-oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token=INSERT_YOUR_USER_ACCESS_TOKEN&client_id=INSERT_YOUR_CLIENT_ID&client_secret=INSERT_YOUR_APP_SECRET
-```
+Head over to the apps script>> script go to the bottom, you'll find the following function importleads():
 
-![step34](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/34%20-%20exchange%20for%20long-lived%20user%20access%20token.png)
+<img width="684" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/29b56925-e2fe-4e7e-8572-9dcc9ee13470">
 
-You can obtain both your App ID and App Secret under `Settings` > `Basic`. Do fill in the rest of the details as well, for example, app icon, category, business use, contact email and privacy policy URL.
-![step35](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/35%20-%20exchange%20for%20long-lived%20user%20access%20token.png)
+in line 460, you should replace "add_longlivedtoken_here" with the long lived access token :
 
-Now you need to copy and paste the text that you have just typed in your text editor into the text field beside of the Submit button, then hit Submit.
-![step36](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/36%20-%20exchange%20for%20long-lived%20user%20access%20token%20.png)
+<img width="608" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/1d63a1c5-f7d5-4b6d-95a1-13601f879481">
 
-The result shown is your long-lived `user access token`.
-![step37](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/37%20-%20exchange%20for%20long-lived%20user%20access%20token.png)
+After adding your token, choose "importLeads" as the function you want to run:
+<img width="461" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/52edc10a-24ea-483b-8679-4e92996a477d">
 
-#### 3. Get a page access token with your user access token
+Then press run:
+<img width="640" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/8250db27-c176-43cd-a4fd-30d7af0c8ef7">
 
-Key in `me/accounts` to the text field beside the Submit button, and make sure you have pasted your long-lived `user access token` into the Access Token field, then hit the Submit button. The result shown are all of your Facebook pages
+If there're no errors(hopefully), then you've got only one more step to go!
 
-> Copy the `access_token` and `id` (Your Facebook Page ID) of your intended Facebook page.
+On the left you'll find a collapsed menu, hover over it, then choose triggers:
+<img width="227" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/ea58ecaf-5d62-48b8-a52f-6e16b6f51303">
 
-![step39](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/39%20-%20get%20long-lived%20page%20access%20token.png)
+Add Trigger:
+<img width="440" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/22baefb0-1e3b-4cbd-b86d-6b2b82a9df3a">
 
-Optionally, if you're curious to know whether this `page access token` expires or not, you may head on to [Facebook Access Token Debugger](https://developers.facebook.com/tools/debug/accesstoken) and give it a check! The result is `Never` expires.
-![step40](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/40%20-%20double%20confirm%20expiry%20date%20of%20page%20access%20token.png)
+Choose importLeads as the function to run:
+<img width="269" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/164f93cf-9b04-409b-a6d3-7b937eb6b4bf">
 
-#### Step 7: Subscribe your Facebook page to your Facebook webhook
+Change event source to time-driven:
+<img width="231" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/a32108f6-f443-452e-bee7-3b0eed30affd">
 
-To link together both of your Facebook page and webhook, you would need to make a `POST` request with the endpoint `<YOUR_FACEBOOK_PAGE_ID>/subscribed_apps`. Make sure that it is `POST`, and make sure that you have keyed in your `page access token` to the Access Token field, then hit Submit.
-![step41](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/41%20-%20make%20your%20page%20subscribe%20to%20the%20webhook.png)
+choose the time between each trigger, I chose 15 minutes:
+<img width="233" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/82c730d4-3273-499e-af5b-2026f48b807c">
 
-You should then be getting the following result:
+Hit save:
+<img width="537" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/fca221c5-8bff-44a4-b626-d9e7ceb4c2b0">
 
-```json
-{
-  "success": true
-}
-```
+Check your trigger for any issues, if it gives you that it completed successfully then you're done!
+You can go to Executions to check the success and failure status.
+<img width="899" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/e7e975f6-1333-4f93-b92a-a78bd295311a">
 
-Now you can make a `GET` request with the same endpoint as above to view the list of subscribed apps.
-![step42](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/42%20-%20view%20subscribed%20webhook.png)
 
-#### Step 8: Update your webhook script to receive and store your lead data in Google Sheets
+### Whew, you pulled it off superstar!
 
-Copy the `doPost()` function from [this file](https://github.com/simmatrix/facebook-leads-google-sheets-integration/blob/master/scripts/Code.gs) and paste it into your script panel. Remember to replace the placeholders `INSERT_YOUR_GOOGLE_SHEETS_ID` and `INSERT_YOUR_LONG_LIVED_PAGE_ACCESS_TOKEN` with your own data.
+Now I'll keep improving on it and I'll be adding any updates here, but for now you will be receiving all your leads into google sheets regularly for free!!
 
-![step43](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/43%20-%20record%20the%20lead%20info.png)
+### Massive appreciation for
 
-If you're curious of where you can obtain your Google Spreadsheet ID, you can get it from the URL itself.
-
-![extra](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/extra.png)
-
-You can now deploy your web app again.
-
-![step44](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/44%20-%20record%20lead%20info.png)
-
-Make sure you are executing your script as `Me (<your_email_address>)` and give `Anyone, even anonymous` the access to your app. And the Project version should be `New`. If you are prompted with any Authorization pop-up dialog again, just do it like how you have done that before.
-
-![step45](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/45%20-%20record%20lead%20info.png)
-
-Because you have now added the lines of code that will access and write to your Google Sheets, you would need to authorize and grant the necessary permissions for your Google Apps script to write to your Google Sheets on behalf of you.
-
-![step46](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/46%20-%20grant%20permission%20for%20your%20app%20to%20read%20google%20sheets.png)
-
-Sign in with your Google account
-
-![step47](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/47%20-%20granting%20permission.png)
-
-Your browser will prompt a warning that this app is not verified. You may click on the `Advanced` link and proceed. No worries, after all this app is being created by you yourself so it's safe.
-
-![step48](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/48%20-%20granting%20permission.png)
-
-After clicking on the `Advanced` link, you may proceed by clicking the link at the bottom `Go to xxxxx (unsafe)`
-
-![step49](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/49%20-%20granting%20permission.png)
-
-Grant the permission for your Google Apps script to view and manage your spreadsheets in Google Drive.
-
-![step50](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/50%20-%20granting%20permission.png)
-
-Now you would need to head over to the Business Settings page of your Facebook Page > "Leads Access" > "CRMs". Select the `Facebook APP` then click on `Assign access` button.
-
-![step51](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/51%20-%20granting%20access%20to%20your%20app.png)
-
-Then you will see the indicator turns green.
-
-![step52](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/52%20-%20granting%20access%20to%20your%20app.png)
-
-#### Step 9: Test sending a lead
-
-> For this section, you would need to head over to [Facebook Lead Ads Testing Tool](https://developers.facebook.com/tools/lead-ads-testing)
- > ![step53](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/53%20-%20test%20sending%20a%20lead.png)
-
-Hit on the "Create lead" button and wait for a moment, then hit on the button "Track status"
-![step54](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/54%20-%20test%20sending%20a%20lead.png)
-
-### TADAA... THE END!
-
-![step61](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/61%20-%20check%20test%20lead.png)
-
-### Additional (Pulling Previous Leads)
-
-So for the above we deal with pulling of Facebook Leads in real-time. How if you just implement it half-way when your campaigns are running? You definitely need to pull all of the other previous leads into your Google Sheets as well right... You can refer to this [alternative script](https://github.com/simmatrix/facebook-leads-google-sheets-integration/blob/master/scripts/CodeAdditional.gs) of which can be called by `<YOUR_GOOGLE_SCRIPTS_WEB_APP_URL>?pull_all_leads=true`. Kindly refer to the `doGet()` function. It handles the pagination as well (as Facebook returns 25 leads per call)
-
-To find the ID of your lead form to be keyed into `var lead_form_id = 'INSERT_YOUR_LEAD_FORM_ID';`, you can go to [Facebook Lead Ads Testing Tool](https://developers.facebook.com/tools/lead-ads-testing) and create a test lead, then look at the `Payload` column at the bottom. `..."form_id":"xxxxxxxxxxx"...`
-![step60](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/additional.png)
-
-In this additional script, I have also sorted the data in the order which I have wanted before inserting it into Google Sheets because I realized that for some of my previous leads, sometimes "email" comes first, sometimes "full_name" comes first, so without ordering them in proper format, it would be a mess in Google Sheets later.
-
-### Additional (Saving Leads from Different Forms to Different Sheets)
-
-Sometimes you may have multiple lead forms created for a single Facebook page, if so, you may refer to this [alternative script](https://github.com/simmatrix/facebook-leads-google-sheets-integration/blob/master/scripts/CodeMultipleFormsSheets.gs)
-
-### Additional (Sending Leads to your Email)
-
-If you would like to have the leads be sent to your mailbox instead, you can refer to this [alternative script](https://github.com/simmatrix/facebook-leads-google-sheets-integration/blob/master/scripts/CodeEmailSending.gs). Do remember to replace `"<YOUR_EMAIL_ADDRESS>"` with your own email address.
-
-![sendemail](https://github.com/simmatrix/facebook-leads-google-sheets-integration/raw/master/images/send-email.png)
+Massive thanks to the original coders who provided the strong base for this walkthrough:
+- https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional
+- https://github.com/bradjasper/ImportJSON
 
 ### Feedback
 
-Should you have any feedback, feel free to send your enquiries via simmatrix100[at]gmail[dot]com.
+If you have any feedback or any suggestions, please reach out, I'd love to improve on this.
