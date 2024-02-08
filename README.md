@@ -1,5 +1,3 @@
-![Transfer Facebook Leads to Google Sheets with Google Apps Script](https://raw.githubusercontent.com/simmatrix/facebook-leads-google-sheets-integration/master/images/0%20-%20intro.png)
-
 You can find the original walkthrough here: https://github.com/simmatrix/facebook-leads-google-sheets-integration#additional
 
 Th walkthrough was great, but it was a bit outdated, therefore in the following visual walkthrough I'll show you how I transfered Facebook leads to Google Sheets and constantly update the sheet using a trigger in app script.
