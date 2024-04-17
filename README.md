@@ -79,7 +79,8 @@ function doGet(request)
 }
 
 
-![step17]<img width="798" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/7c28202a-0471-4832-8d79-90d203b411b1">
+![step17]<img width="533" alt="Screenshot 2024-04-17 182652" src="https://github.com/nsmohamed/Performance-Team/assets/98906258/554876e8-1013-4177-8ef2-30b082caa489">
+
 
 Then you need to deploy your script to make it live.
 ![step18]<img width="844" alt="image" src="https://github.com/nsmohamed/facebook-leads-google-sheets-integration/assets/98906258/16f1fae8-c2cd-42d6-ba99-214a7fc48fbc">
